@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Idea;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Mailables\Content;
 
 class IdeaController extends Controller
 {  
     public function show(Idea $idea){
+
 
         return view('ideas.show', [
             'idea' => $idea
@@ -28,11 +30,11 @@ class IdeaController extends Controller
 
     public function update(Idea $idea){
 
-        request()->validate([
+        $validated = request()->validate([
             'update-content' => 'required|min:5|max:240'
         ]);
 
-        $idea->content = request()->get('update-content', '');
+        $idea->update($validated['update-content']);
 
         $idea->save();
 
@@ -43,15 +45,18 @@ class IdeaController extends Controller
 
     public function store(){
 
-        request()->validate([
+        $validated = request()->validate([
             'idea-content' => 'required|min:5|max:240'
         ]);
 
-        $idea = Idea::create(
-            [
-                'content' =>  request()->get('idea-content')
-            ]
-        );
+        // $idea = Idea::create(
+        //     [
+        //         'content' =>  request()->get('idea-content')
+        //     ]
+        // );
+
+        $idea = Idea::create(['content' => $validated['idea-content']]);
+
         // $idea = new Idea([
         //     'content' => request()->get('idea-content')
         // ]);
