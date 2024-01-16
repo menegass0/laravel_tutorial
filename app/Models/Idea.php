@@ -15,10 +15,10 @@ class Idea extends Model
         'updated_at'
     ];
 
-    protected $fillable = [
-        'content',
-        'like'
-    ];
+    // protected $fillable = [
+    //     'content',
+    //     'like'
+    // ];
 
     public function comments(){
         return $this->hasMany(Comment::class, 'idea_id', 'id');

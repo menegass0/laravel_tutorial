@@ -34,9 +34,9 @@ class IdeaController extends Controller
             'update-content' => 'required|min:5|max:240'
         ]);
 
-        $idea->update($validated['update-content']);
+        $idea->update(['content' =>$validated['update-content']]);
 
-        $idea->save();
+        // $idea->save();
 
         return redirect()->route('ideas.show', $idea->id)->with('success', 'Idea created successfully!');
     }
